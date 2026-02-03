@@ -32,6 +32,19 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Temporary debug endpoint - remove after diagnosis
+app.get('/debug-env', (req, res) => {
+  res.json({
+    ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY ? process.env.ANTHROPIC_API_KEY.slice(0, 20) + '...' : 'NOT SET',
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.slice(0, 20) + '...' : 'NOT SET',
+    NODE_ENV: process.env.NODE_ENV,
+    PORT: process.env.PORT,
+    SUPABASE_URL: process.env.SUPABASE_URL ? 'SET' : 'NOT SET',
+    cwd: process.cwd(),
+    __dirname: __dirname
+  });
+});
+
 // API Routes
 app.use('/api', chatRouter);
 app.use('/api', vocabularyRouter);
