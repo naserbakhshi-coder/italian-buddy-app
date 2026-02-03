@@ -30,7 +30,8 @@ class ItalianAgent {
     const workflowPath = path.join(__dirname, 'workflows', `${mode}_mode.md`);
 
     if (!fs.existsSync(workflowPath)) {
-      throw new Error(`Workflow file not found: ${workflowPath}`);
+      const debug = { workflowPath, __dirname, cwd: process.cwd(), files: fs.readdirSync(__dirname).slice(0, 20) };
+      throw new Error(`Workflow file not found. Debug: ${JSON.stringify(debug)}`);
     }
 
     return fs.readFileSync(workflowPath, 'utf-8');
