@@ -1,0 +1,302 @@
+[
+  {
+    "word": "mangiare",
+    "translation": "to eat",
+    "category": "verbs",
+    "level": "beginner"
+  },
+  {
+    "word": "preoccupato",
+    "translation": "worried",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "inoltre",
+    "translation": "furthermore, besides",
+    "category": "connectors",
+    "level": "intermediate"
+  },
+  {
+    "word": "convincere",
+    "translation": "to convince",
+    "category": "verbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "nonostante",
+    "translation": "despite, although",
+    "category": "connectors",
+    "level": "intermediate"
+  },
+  {
+    "word": "purtroppo",
+    "translation": "unfortunately",
+    "category": "adverbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "invece",
+    "translation": "instead, on the other hand",
+    "category": "connectors",
+    "level": "intermediate"
+  },
+  {
+    "word": "circa",
+    "translation": "about, approximately",
+    "category": "adverbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "quasi",
+    "translation": "almost, nearly",
+    "category": "adverbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "migliore",
+    "translation": "better, best",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "peggiore",
+    "translation": "worse, worst",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "rendere",
+    "translation": "to make, to render",
+    "category": "verbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "accorgersene",
+    "translation": "to realize, to notice",
+    "category": "verbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "chiedere",
+    "translation": "to ask",
+    "category": "verbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "rispondere",
+    "translation": "to answer, to reply",
+    "category": "verbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "sperare",
+    "translation": "to hope",
+    "category": "verbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "dubitare",
+    "translation": "to doubt",
+    "category": "verbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "orgoglioso",
+    "translation": "proud",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "deluso",
+    "translation": "disappointed",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "sorpreso",
+    "translation": "surprised",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "annoiato",
+    "translation": "bored",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "entusiasta",
+    "translation": "enthusiastic",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "evitare",
+    "translation": "to avoid",
+    "category": "verbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "raggiungere",
+    "translation": "to reach, to achieve",
+    "category": "verbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "affrontare",
+    "translation": "to face, to deal with",
+    "category": "verbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "migliorare",
+    "translation": "to improve",
+    "category": "verbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "peggiorare",
+    "translation": "to worsen",
+    "category": "verbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "comunque",
+    "translation": "anyway, however",
+    "category": "connectors",
+    "level": "intermediate"
+  },
+  {
+    "word": "quindi",
+    "translation": "therefore, so",
+    "category": "connectors",
+    "level": "intermediate"
+  },
+  {
+    "word": "perciò",
+    "translation": "therefore, for this reason",
+    "category": "connectors",
+    "level": "intermediate"
+  },
+  {
+    "word": "piuttosto",
+    "translation": "rather, quite",
+    "category": "adverbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "appena",
+    "translation": "just, as soon as",
+    "category": "adverbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "finalmente",
+    "translation": "finally, at last",
+    "category": "adverbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "ancora",
+    "translation": "still, yet, again",
+    "category": "adverbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "già",
+    "translation": "already",
+    "category": "adverbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "spesso",
+    "translation": "often",
+    "category": "adverbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "raramente",
+    "translation": "rarely",
+    "category": "adverbs",
+    "level": "intermediate"
+  },
+  {
+    "word": "quotidiano",
+    "translation": "daily, everyday",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "attuale",
+    "translation": "current, present",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "precedente",
+    "translation": "previous, prior",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "successivo",
+    "translation": "next, following",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "probabile",
+    "translation": "likely, probable",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "improbabile",
+    "translation": "unlikely, improbable",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "necessario",
+    "translation": "necessary",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "inutile",
+    "translation": "useless, pointless",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "utile",
+    "translation": "useful",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "semplice",
+    "translation": "simple, easy",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "complicato",
+    "translation": "complicated",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "interessante",
+    "translation": "interesting",
+    "category": "adjectives",
+    "level": "intermediate"
+  },
+  {
+    "word": "noioso",
+    "translation": "boring",
+    "category": "adjectives",
+    "level": "intermediate"
+  }
+]

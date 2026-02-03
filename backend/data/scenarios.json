@@ -1,0 +1,122 @@
+[
+  {
+    "id": "restaurant",
+    "title": "Al Ristorante",
+    "description": "Order a meal at an Italian restaurant",
+    "difficulty": "intermediate",
+    "aiRole": "You are a friendly Italian waiter at a traditional restaurant. Be polite, professional, and helpful. Offer recommendations, take orders, and provide good service.",
+    "openingLine": "Buonasera e benvenuti! Siete pronti per ordinare o preferite ancora qualche minuto?",
+    "objectives": [
+      "Greet the waiter",
+      "Ask about menu recommendations",
+      "Order food and drinks",
+      "Ask for the bill"
+    ],
+    "icon": "🍝"
+  },
+  {
+    "id": "hotel-checkin",
+    "title": "Check-in in Hotel",
+    "description": "Check into an Italian hotel",
+    "difficulty": "intermediate",
+    "aiRole": "You are a professional hotel receptionist. Be courteous, efficient, and helpful. Provide information about the hotel services and help guests check in smoothly.",
+    "openingLine": "Buongiorno! Benvenuto al Hotel Bella Vista. Ha una prenotazione?",
+    "objectives": [
+      "Provide reservation name",
+      "Ask about breakfast times",
+      "Ask about WiFi password",
+      "Receive room key"
+    ],
+    "icon": "🏨"
+  },
+  {
+    "id": "shopping",
+    "title": "Shopping for Clothes",
+    "description": "Buy clothes at an Italian shop",
+    "difficulty": "intermediate",
+    "aiRole": "You are a friendly clothing shop assistant. Be helpful, show enthusiasm for the products, and assist the customer in finding what they need.",
+    "openingLine": "Ciao! Posso aiutarti a trovare qualcosa? Abbiamo delle belle novità questa settimana!",
+    "objectives": [
+      "Ask about a specific item",
+      "Inquire about sizes and colors",
+      "Try on clothes",
+      "Make a purchase or decide not to buy"
+    ],
+    "icon": "👕"
+  },
+  {
+    "id": "train-station",
+    "title": "Buying Train Tickets",
+    "description": "Purchase train tickets at the station",
+    "difficulty": "intermediate",
+    "aiRole": "You are a ticket agent at an Italian train station. Be efficient, clear, and helpful. Provide train information and sell tickets.",
+    "openingLine": "Buongiorno. Per quale destinazione?",
+    "objectives": [
+      "State destination",
+      "Ask about departure times",
+      "Ask about the platform number",
+      "Purchase ticket"
+    ],
+    "icon": "🚂"
+  },
+  {
+    "id": "pharmacy",
+    "title": "At the Pharmacy",
+    "description": "Get medicine at an Italian pharmacy",
+    "difficulty": "intermediate",
+    "aiRole": "You are a caring pharmacist. Be professional, ask relevant health questions, and provide helpful medical advice and recommendations.",
+    "openingLine": "Buonasera. Come posso aiutarla oggi?",
+    "objectives": [
+      "Explain your symptom",
+      "Ask for a recommendation",
+      "Ask about dosage",
+      "Purchase the medicine"
+    ],
+    "icon": "💊"
+  },
+  {
+    "id": "coffee-bar",
+    "title": "Ordering at a Café",
+    "description": "Order coffee and pastries at an Italian bar",
+    "difficulty": "beginner",
+    "aiRole": "You are a barista at a busy Italian café. Be quick, friendly, and efficient. Italians usually stand at the bar for coffee.",
+    "openingLine": "Ciao! Cosa prendi?",
+    "objectives": [
+      "Order a coffee",
+      "Order a pastry",
+      "Ask the price",
+      "Pay"
+    ],
+    "icon": "☕"
+  },
+  {
+    "id": "asking-directions",
+    "title": "Asking for Directions",
+    "description": "Ask for directions in an Italian city",
+    "difficulty": "intermediate",
+    "aiRole": "You are a helpful Italian local. Be friendly and give clear directions. Use typical landmarks and expressions Italians use when giving directions.",
+    "openingLine": "Ciao! Sei perso? Posso aiutarti?",
+    "objectives": [
+      "Ask how to get to a specific place",
+      "Ask for clarification",
+      "Thank the person",
+      "Confirm the directions"
+    ],
+    "icon": "🗺️"
+  },
+  {
+    "id": "meeting-friend",
+    "title": "Meeting a Friend",
+    "description": "Make plans with an Italian friend",
+    "difficulty": "intermediate",
+    "aiRole": "You are an Italian friend. Be casual, warm, and enthusiastic. Use informal language (tu form). Suggest activities and make plans together.",
+    "openingLine": "Ciao! Come va? È tanto che non ci vediamo!",
+    "objectives": [
+      "Greet your friend",
+      "Talk about how you've been",
+      "Suggest an activity to do together",
+      "Agree on a time and place"
+    ],
+    "icon": "👋"
+  }
+]
