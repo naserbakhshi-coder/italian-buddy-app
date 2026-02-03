@@ -34,12 +34,25 @@ app.get('/health', (req, res) => {
 
 // Temporary debug endpoint - remove after diagnosis
 app.get('/debug-env', (req, res) => {
+  // Test which provider would be selected
+  const anthropicKey = process.env.ANTHROPIC_API_KEY;
+  const openaiKey = process.env.OPENAI_API_KEY;
+  const isValidKey = (key, prefix) => key && key.startsWith(prefix) && key.length > 20;
+
+  let selectedProvider = 'none';
+  if (isValidKey(openaiKey, 'sk-')) {
+    selectedProvider = 'openai';
+  } else if (isValidKey(anthropicKey, 'sk-ant-')) {
+    selectedProvider = 'anthropic';
+  }
+
   res.json({
-    ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY ? process.env.ANTHROPIC_API_KEY.slice(0, 20) + '...' : 'NOT SET',
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.slice(0, 20) + '...' : 'NOT SET',
+    ANTHROPIC_API_KEY: anthropicKey ? anthropicKey.slice(0, 20) + '...' : 'NOT SET',
+    OPENAI_API_KEY: openaiKey ? openaiKey.slice(0, 20) + '...' : 'NOT SET',
+    selectedProvider,
+    anthropicValid: isValidKey(anthropicKey, 'sk-ant-'),
+    openaiValid: isValidKey(openaiKey, 'sk-'),
     NODE_ENV: process.env.NODE_ENV,
-    PORT: process.env.PORT,
-    SUPABASE_URL: process.env.SUPABASE_URL ? 'SET' : 'NOT SET',
     cwd: process.cwd(),
     __dirname: __dirname
   });
