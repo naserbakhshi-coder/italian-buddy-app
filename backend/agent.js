@@ -5,13 +5,16 @@ const path = require('path');
 
 class ItalianAgent {
   constructor(anthropicKey, openaiKey) {
-    // Determine which provider to use
-    if (openaiKey && openaiKey !== 'your_openai_key_here') {
+    // Helper to check if a key is valid (not a placeholder)
+    const isValidKey = (key, prefix) => key && key.startsWith(prefix) && key.length > 20;
+
+    // Determine which provider to use (prefer OpenAI for cost, fall back to Anthropic)
+    if (isValidKey(openaiKey, 'sk-')) {
       this.provider = 'openai';
       this.client = new OpenAI({ apiKey: openaiKey });
       this.model = 'gpt-4o-mini'; // Cheaper and faster
       console.log('✅ Using OpenAI as AI provider');
-    } else if (anthropicKey && anthropicKey !== 'your_anthropic_key_here') {
+    } else if (isValidKey(anthropicKey, 'sk-ant-')) {
       this.provider = 'anthropic';
       this.client = new Anthropic({ apiKey: anthropicKey });
       this.model = 'claude-sonnet-4-5-20250929';
