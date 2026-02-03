@@ -27,7 +27,7 @@ class ItalianAgent {
    * @returns {string} - The workflow content
    */
   loadWorkflow(mode) {
-    const workflowPath = path.join(__dirname, '../workflows', `${mode}_mode.md`);
+    const workflowPath = path.join(__dirname, 'workflows', `${mode}_mode.md`);
 
     if (!fs.existsSync(workflowPath)) {
       throw new Error(`Workflow file not found: ${workflowPath}`);
