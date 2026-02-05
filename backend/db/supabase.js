@@ -2,7 +2,8 @@ const { createClient } = require('@supabase/supabase-js');
 
 // Initialize Supabase client
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
+// Use service role key for backend (bypasses RLS), fallback to anon key
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
 
 // Fixed UUID for demo user (vocabulary table requires UUID format)
 const DEMO_USER_UUID = '00000000-0000-0000-0000-000000000001';
@@ -21,6 +22,8 @@ function toVocabularyUserId(userId) {
 
 if (!supabaseUrl || !supabaseKey) {
   console.warn('⚠️  Supabase credentials not configured. Database operations will fail.');
+} else if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  console.warn('⚠️  SUPABASE_SERVICE_ROLE_KEY not set. Using anon key - some operations may fail due to RLS policies.');
 }
 
 const supabase = createClient(supabaseUrl || '', supabaseKey || '');
