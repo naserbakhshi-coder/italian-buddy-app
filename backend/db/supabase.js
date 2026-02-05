@@ -168,8 +168,8 @@ async function updateVocabularyReview(wordId, correct) {
  * @returns {Promise<Object>} - Created vocabulary record
  */
 async function addVocabularyWord(data) {
+  // Set next_review to now so words are immediately available for review
   const nextReview = new Date();
-  nextReview.setDate(nextReview.getDate() + 1); // Review tomorrow
   const vocabUserId = toVocabularyUserId(data.userId);
 
   const { error, data: result } = await supabase
