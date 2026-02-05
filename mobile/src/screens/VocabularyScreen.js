@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -7,11 +7,13 @@ import {
   ActivityIndicator,
   Alert,
   Platform,
+  Animated,
 } from 'react-native';
 import Flashcard from '../components/Flashcard';
 import api from '../services/api';
 
-const VocabularyScreen = () => {
+const VocabularyScreen = ({ navigation }) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
   const [words, setWords] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -19,6 +21,13 @@ const VocabularyScreen = () => {
 
   useEffect(() => {
     loadVocabulary();
+
+    // Fade in animation
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 800,
+      useNativeDriver: true,
+    }).start();
   }, []);
 
   const loadVocabulary = async () => {
@@ -105,7 +114,7 @@ const VocabularyScreen = () => {
   if (isLoading) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
+        <ActivityIndicator size="large" color="#F4D5B8" />
         <Text style={styles.loadingText}>Loading your vocabulary...</Text>
       </View>
     );
@@ -113,29 +122,48 @@ const VocabularyScreen = () => {
 
   if (words.length === 0) {
     return (
-      <View style={styles.centerContainer}>
-        <Text style={styles.emptyIcon}>📚</Text>
-        <Text style={styles.emptyTitle}>No Words to Review</Text>
-        <Text style={styles.emptyText}>
-          All caught up! Come back tomorrow for more vocabulary practice.
-        </Text>
-        <TouchableOpacity style={styles.reloadButton} onPress={loadVocabulary}>
-          <Text style={styles.reloadButtonText}>Reload</Text>
-        </TouchableOpacity>
-      </View>
+      <Animated.View style={[styles.centerContainer, { opacity: fadeAnim }]}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            <Text style={styles.backButtonText}>← Home</Text>
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Vocabulary Practice</Text>
+        </View>
+        <View style={styles.emptyContent}>
+          <Text style={styles.emptyIcon}>📚</Text>
+          <Text style={styles.emptyTitle}>No Words to Review</Text>
+          <Text style={styles.emptyText}>
+            All caught up! Come back tomorrow for more vocabulary practice.
+          </Text>
+          <TouchableOpacity style={styles.reloadButton} onPress={loadVocabulary}>
+            <Text style={styles.reloadButtonText}>Load More Words</Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
     );
   }
 
   const currentWord = words[currentIndex];
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Vocabulary Practice 📖</Text>
-        <Text style={styles.headerSubtitle}>
-          Card {currentIndex + 1} of {words.length}
-        </Text>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Text style={styles.backButtonText}>← Home</Text>
+        </TouchableOpacity>
+        <View style={styles.headerContent}>
+          <View style={styles.headerTextContainer}>
+            <Text style={styles.headerTitle}>Vocabulary Practice</Text>
+            <Text style={styles.headerSubtitle}>
+              Card {currentIndex + 1} of {words.length}
+            </Text>
+          </View>
+          <View style={styles.statsContainer}>
+            <Text style={styles.statsNumber}>{words.length - currentIndex}</Text>
+            <Text style={styles.statsLabel}>remaining</Text>
+          </View>
+        </View>
       </View>
 
       {/* Progress bar */}
@@ -148,70 +176,122 @@ const VocabularyScreen = () => {
         />
       </View>
 
-      {/* Flashcard */}
+      {/* Flashcard - pass word object directly */}
       <Flashcard
-        word={currentWord.word}
-        translation={currentWord.translation}
-        exampleItalian={currentWord.example_italian}
-        exampleEnglish={currentWord.example_english}
+        word={currentWord}
         onKnow={handleKnow}
         onDontKnow={handleDontKnow}
       />
 
       {isReviewing && (
         <View style={styles.reviewingOverlay}>
-          <ActivityIndicator size="small" color="#007AFF" />
+          <ActivityIndicator size="small" color="#F4D5B8" />
         </View>
       )}
-    </View>
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#3F5456',
   },
   header: {
-    backgroundColor: '#34C759',
+    backgroundColor: '#4A5C5E',
     paddingTop: Platform.OS === 'ios' ? 50 : 20,
-    paddingBottom: 16,
+    paddingBottom: 20,
     paddingHorizontal: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 8,
+    borderBottomWidth: 3,
+    borderBottomColor: '#F4D5B8',
+  },
+  backButton: {
+    marginBottom: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    alignSelf: 'flex-start',
+  },
+  backButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  headerContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  headerTextContainer: {
+    flex: 1,
   },
   headerTitle: {
-    fontSize: 24,
-    fontWeight: '700',
+    fontSize: 28,
+    fontWeight: '800',
     color: '#FFFFFF',
-    marginBottom: 4,
+    letterSpacing: 0.5,
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 3,
   },
   headerSubtitle: {
     fontSize: 14,
-    color: '#E0F5E8',
+    color: 'rgba(255, 255, 255, 0.85)',
+    marginTop: 4,
+    fontWeight: '500',
+  },
+  statsContainer: {
+    backgroundColor: '#F4D5B8',
+    borderRadius: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    minWidth: 70,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  statsNumber: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#3F5456',
+  },
+  statsLabel: {
+    fontSize: 11,
+    color: '#3F5456',
+    marginTop: 2,
+    fontWeight: '600',
   },
   progressBarContainer: {
-    height: 4,
-    backgroundColor: '#E0E0E0',
+    height: 6,
+    backgroundColor: 'rgba(244, 213, 184, 0.2)',
   },
   progressBar: {
     height: '100%',
-    backgroundColor: '#34C759',
+    backgroundColor: '#F4D5B8',
   },
   centerContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 40,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#3F5456',
   },
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#666',
+    color: 'rgba(255, 255, 255, 0.7)',
+  },
+  emptyContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 40,
   },
   emptyIcon: {
     fontSize: 64,
@@ -220,26 +300,31 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#333',
+    color: '#FFFFFF',
     marginBottom: 12,
   },
   emptyText: {
     fontSize: 16,
-    color: '#666',
+    color: 'rgba(255, 255, 255, 0.7)',
     textAlign: 'center',
     lineHeight: 24,
     marginBottom: 30,
   },
   reloadButton: {
-    backgroundColor: '#34C759',
+    backgroundColor: '#F4D5B8',
     paddingVertical: 14,
     paddingHorizontal: 30,
-    borderRadius: 12,
+    borderRadius: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 4,
   },
   reloadButtonText: {
-    color: '#FFFFFF',
+    color: '#3F5456',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   reviewingOverlay: {
     position: 'absolute',

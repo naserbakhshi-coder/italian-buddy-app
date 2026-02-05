@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen';
 import ChatScreen from './src/screens/ChatScreen';
 import ScenarioScreen from './src/screens/ScenarioScreen';
+import VocabularyScreen from './src/screens/VocabularyScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Chat" component={ChatScreen} />
         <Stack.Screen name="Scenarios" component={ScenarioScreen} />
+        <Stack.Screen name="Vocabulary" component={VocabularyScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

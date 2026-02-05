@@ -1,26 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 
 /**
  * Flashcard component with flip animation
+ * Matches the app's teal/peach color scheme
+ *
  * @param {Object} props
- * @param {string} props.word - Italian word
- * @param {string} props.translation - English translation
- * @param {string} props.exampleItalian - Example sentence in Italian
- * @param {string} props.exampleEnglish - Example sentence in English
+ * @param {Object} props.word - Word object from API with word, translation, category, etc.
  * @param {Function} props.onKnow - Called when user knows the word
  * @param {Function} props.onDontKnow - Called when user doesn't know
  */
-const Flashcard = ({
-  word,
-  translation,
-  exampleItalian,
-  exampleEnglish,
-  onKnow,
-  onDontKnow,
-}) => {
+const Flashcard = ({ word, onKnow, onDontKnow }) => {
   const [flipped, setFlipped] = useState(false);
   const [flipAnimation] = useState(new Animated.Value(0));
+
+  // Reset flip state when word changes
+  useEffect(() => {
+    setFlipped(false);
+    flipAnimation.setValue(0);
+  }, [word?.id]);
 
   const handleFlip = () => {
     if (!flipped) {
@@ -62,6 +60,10 @@ const Flashcard = ({
     transform: [{ rotateY: backInterpolate }],
   };
 
+  if (!word) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       {/* Flashcard */}
@@ -72,21 +74,26 @@ const Flashcard = ({
       >
         {/* Front of card */}
         <Animated.View style={[styles.card, styles.cardFront, frontAnimatedStyle]}>
-          <Text style={styles.wordText}>{word}</Text>
-          <Text style={styles.tapHint}>Tap to reveal</Text>
+          {word.category && (
+            <View style={styles.categoryBadge}>
+              <Text style={styles.categoryText}>{word.category}</Text>
+            </View>
+          )}
+          <Text style={styles.wordText}>{word.word}</Text>
+          <Text style={styles.tapHint}>Tap to reveal translation</Text>
         </Animated.View>
 
         {/* Back of card */}
         <Animated.View style={[styles.card, styles.cardBack, backAnimatedStyle]}>
           <Text style={styles.translationLabel}>Translation:</Text>
-          <Text style={styles.translationText}>{translation}</Text>
+          <Text style={styles.translationText}>{word.translation}</Text>
 
-          {exampleItalian && (
+          {word.example_italian && (
             <View style={styles.exampleContainer}>
               <Text style={styles.exampleLabel}>Example:</Text>
-              <Text style={styles.exampleItalian}>{exampleItalian}</Text>
-              {exampleEnglish && (
-                <Text style={styles.exampleEnglish}>{exampleEnglish}</Text>
+              <Text style={styles.exampleItalian}>{word.example_italian}</Text>
+              {word.example_english && (
+                <Text style={styles.exampleEnglish}>{word.example_english}</Text>
               )}
             </View>
           )}
@@ -101,7 +108,7 @@ const Flashcard = ({
             onPress={onDontKnow}
           >
             <Text style={styles.buttonIcon}>✗</Text>
-            <Text style={styles.buttonText}>Don't Know</Text>
+            <Text style={styles.buttonText}>Need Practice</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -109,14 +116,14 @@ const Flashcard = ({
             onPress={onKnow}
           >
             <Text style={styles.buttonIcon}>✓</Text>
-            <Text style={styles.buttonText}>I Know This</Text>
+            <Text style={styles.buttonText}>Got It!</Text>
           </TouchableOpacity>
         </View>
       )}
 
       {!flipped && (
         <Text style={styles.instructionText}>
-          Tap the card to see the translation and example
+          Tap the card to see the translation
         </Text>
       )}
     </View>
@@ -132,13 +139,12 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: '100%',
-    height: 400,
+    height: 340,
     maxWidth: 500,
   },
   card: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#FFFFFF',
     borderRadius: 20,
     padding: 30,
     justifyContent: 'center',
@@ -146,67 +152,91 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backfaceVisibility: 'hidden',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
     elevation: 8,
+    borderWidth: 3,
+    borderColor: '#F4D5B8',
   },
   cardFront: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#4A5C5E',
   },
   cardBack: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#3F5456',
+  },
+  categoryBadge: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    backgroundColor: 'rgba(244, 213, 184, 0.2)',
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#F4D5B8',
+  },
+  categoryText: {
+    color: '#F4D5B8',
+    fontSize: 12,
+    fontWeight: '600',
+    textTransform: 'capitalize',
   },
   wordText: {
-    fontSize: 48,
+    fontSize: 44,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    textAlign: 'center',
+    marginBottom: 16,
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+  },
+  tapHint: {
+    position: 'absolute',
+    bottom: 24,
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.5)',
+  },
+  translationLabel: {
+    fontSize: 14,
+    color: '#F4D5B8',
+    marginBottom: 8,
+    textTransform: 'uppercase',
+    fontWeight: '600',
+    letterSpacing: 1,
+  },
+  translationText: {
+    fontSize: 32,
     fontWeight: '700',
     color: '#FFFFFF',
     textAlign: 'center',
     marginBottom: 20,
   },
-  tapHint: {
-    fontSize: 14,
-    color: '#E0E0E0',
-    fontStyle: 'italic',
-  },
-  translationLabel: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 8,
-    textTransform: 'uppercase',
-    fontWeight: '600',
-  },
-  translationText: {
-    fontSize: 32,
-    fontWeight: '600',
-    color: '#333',
-    textAlign: 'center',
-    marginBottom: 30,
-  },
   exampleContainer: {
-    marginTop: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#E0E0E0',
+    marginTop: 16,
+    padding: 16,
+    backgroundColor: 'rgba(244, 213, 184, 0.1)',
+    borderRadius: 12,
     width: '100%',
   },
   exampleLabel: {
     fontSize: 12,
-    color: '#666',
+    color: '#F4D5B8',
     marginBottom: 8,
     textTransform: 'uppercase',
     fontWeight: '600',
   },
   exampleItalian: {
     fontSize: 16,
-    color: '#007AFF',
+    color: '#FFFFFF',
     lineHeight: 24,
     marginBottom: 8,
     fontStyle: 'italic',
   },
   exampleEnglish: {
     fontSize: 14,
-    color: '#999',
+    color: 'rgba(255, 255, 255, 0.7)',
     lineHeight: 20,
   },
   buttonsContainer: {
@@ -223,31 +253,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 16,
     paddingHorizontal: 20,
-    borderRadius: 12,
+    borderRadius: 16,
     gap: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   dontKnowButton: {
-    backgroundColor: '#FF3B30',
+    backgroundColor: '#E74C3C',
   },
   knowButton: {
-    backgroundColor: '#34C759',
+    backgroundColor: '#2ECC71',
   },
   buttonIcon: {
-    fontSize: 24,
+    fontSize: 22,
     color: '#FFFFFF',
     fontWeight: '700',
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
     color: '#FFFFFF',
   },
   instructionText: {
     marginTop: 30,
     fontSize: 14,
-    color: '#999',
+    color: 'rgba(255, 255, 255, 0.6)',
     textAlign: 'center',
-    fontStyle: 'italic',
   },
 });
 

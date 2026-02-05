@@ -51,7 +51,7 @@ const HomeScreen = ({ navigation }) => {
       icon: '📚',
       description: 'Master 50 Italian words with spaced repetition and AI-generated examples',
       color: '#7FA39B', // Sage teal
-      comingSoon: true,
+      screen: 'Vocabulary',
     },
     {
       id: 'daily',
