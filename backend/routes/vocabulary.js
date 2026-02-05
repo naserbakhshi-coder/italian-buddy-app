@@ -190,7 +190,12 @@ router.post('/vocabulary/seed', async (req, res) => {
     res.json({
       added: addedWords.length,
       words: addedWords,
-      errors: errors.length > 0 ? errors : undefined
+      errors: errors.length > 0 ? errors : undefined,
+      debug: {
+        totalVocabulary: vocabularyData.length,
+        selectedCount: selectedWords.length,
+        requestedCount: count
+      }
     });
 
   } catch (error) {
