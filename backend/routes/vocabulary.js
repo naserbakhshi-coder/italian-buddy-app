@@ -171,6 +171,7 @@ router.post('/vocabulary/seed', async (req, res) => {
 
     // Add words to database
     const addedWords = [];
+    const errors = [];
     for (const wordData of selectedWords) {
       try {
         const added = await addVocabularyWord({
@@ -181,16 +182,15 @@ router.post('/vocabulary/seed', async (req, res) => {
         });
         addedWords.push(added);
       } catch (error) {
-        // Skip if word already exists for user
-        if (!error.message.includes('duplicate')) {
-          console.error(`Failed to add word ${wordData.word}:`, error);
-        }
+        console.error(`Failed to add word ${wordData.word}:`, error.message);
+        errors.push({ word: wordData.word, error: error.message });
       }
     }
 
     res.json({
       added: addedWords.length,
-      words: addedWords
+      words: addedWords,
+      errors: errors.length > 0 ? errors : undefined
     });
 
   } catch (error) {
