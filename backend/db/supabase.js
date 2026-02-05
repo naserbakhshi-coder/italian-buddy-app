@@ -4,6 +4,21 @@ const { createClient } = require('@supabase/supabase-js');
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
+// Fixed UUID for demo user (vocabulary table requires UUID format)
+const DEMO_USER_UUID = '00000000-0000-0000-0000-000000000001';
+
+/**
+ * Convert user ID to UUID format for vocabulary table
+ * @param {string} userId - User ID (may be 'demo-user' or a UUID)
+ * @returns {string} - UUID format user ID
+ */
+function toVocabularyUserId(userId) {
+  if (userId === 'demo-user') {
+    return DEMO_USER_UUID;
+  }
+  return userId;
+}
+
 if (!supabaseUrl || !supabaseKey) {
   console.warn('⚠️  Supabase credentials not configured. Database operations will fail.');
 }
@@ -73,11 +88,12 @@ async function getConversationHistory(userId, mode = null, limit = 20) {
  */
 async function getVocabularyDue(userId) {
   const now = new Date().toISOString();
+  const vocabUserId = toVocabularyUserId(userId);
 
   const { error, data } = await supabase
     .from('vocabulary')
     .select('*')
-    .eq('user_id', userId)
+    .eq('user_id', vocabUserId)
     .lte('next_review', now)
     .order('next_review', { ascending: true })
     .limit(20);
@@ -154,11 +170,12 @@ async function updateVocabularyReview(wordId, correct) {
 async function addVocabularyWord(data) {
   const nextReview = new Date();
   nextReview.setDate(nextReview.getDate() + 1); // Review tomorrow
+  const vocabUserId = toVocabularyUserId(data.userId);
 
   const { error, data: result } = await supabase
     .from('vocabulary')
     .insert({
-      user_id: data.userId,
+      user_id: vocabUserId,
       word: data.word,
       translation: data.translation,
       example_italian: data.exampleItalian,
